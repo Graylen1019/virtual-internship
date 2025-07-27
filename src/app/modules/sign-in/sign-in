@@ -1,0 +1,18 @@
+<!-- <button
+          onClick={() => handleGuestLogin()}
+          className='w-full px-4 py-3 bg-gray-600 font-semibold rounded-md hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+        >
+          Sign in as guest
+        </button>
+
+        const handleGuestLogin = async function handleGuest() {
+    signInAnonymously(auth)
+      .then(() => {
+        console.log("Signed in anonymously!");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(`Error signing in anonymously: ${errorCode} - ${errorMessage}`);
+      });
+  } -->

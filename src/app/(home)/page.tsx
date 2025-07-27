@@ -17,7 +17,7 @@ export default function Home() {
           </figure>
           <ul className="nav__list--wrapper">
             <li  className="nav__list nav__list--login">
-              <Link href={"/sign-in"}>
+              <Link href={"/sign-up"}>
               Login
               </Link>
             </li>
