@@ -16,9 +16,9 @@ export default function Home() {
             <img className="nav__img" src="/assets/logo.png" alt="logo" />
           </figure>
           <ul className="nav__list--wrapper">
-            <li  className="nav__list nav__list--login">
-              <Link href={"/sign-up"}>
-              Login
+            <li className="nav__list nav__list--login">
+              <Link href={"/sign-in"}>
+                Login
               </Link>
             </li>
             <li className="nav__list nav__list--mobile">About</li>
@@ -227,7 +227,7 @@ export default function Home() {
             <div className="reviews__btn--wrapper">
               <button className="btn home__cta--btn">
                 <Link href={"/sign-in"}>
-                Login
+                  Login
                 </Link>
               </button>
             </div>

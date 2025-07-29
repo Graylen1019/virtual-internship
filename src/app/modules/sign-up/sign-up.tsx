@@ -10,6 +10,8 @@ import { Separator } from '@radix-ui/react-separator'; // Assuming Radix Separat
 import { AiFillGoogleCircle } from 'react-icons/ai';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Router } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export const SignUpForm = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +22,7 @@ export const SignUpForm = () => {
 
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
+  const router = useRouter()
 
   const signInWithGooglePopup = () => {
     signInWithPopup(auth, provider)
@@ -35,6 +38,7 @@ export const SignUpForm = () => {
         const user = result.user;
         console.log("User signed in with Google (Popup):", user);
         setMessage('Signed in with Google successfully!');
+        router.push("/for-you")
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -61,6 +65,7 @@ export const SignUpForm = () => {
       });
 
       setMessage('Sign-up successful! User data added to Firestore.');
+      router.push("/sign-in")
     } catch (error: unknown) {
       console.error('Error signing up or adding user data:', error);
       if (error instanceof Error) {
@@ -126,7 +131,7 @@ export const SignUpForm = () => {
         </Button>
         {!message && (
           <Button
-          variant={"ghost"}
+            variant={"ghost"}
           >
             <Link className='underline text-blue-400' href={"/sign-in"}>
               Already have an acoount?
