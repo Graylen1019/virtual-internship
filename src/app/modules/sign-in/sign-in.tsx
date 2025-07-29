@@ -14,7 +14,6 @@ import { AiFillGoogleCircle } from 'react-icons/ai';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { User2 } from 'lucide-react';
-import { Router } from 'next/router';
 import { useRouter } from 'next/navigation';
 
 export const SignInForm = () => { // Keep the component name as SignInForm
