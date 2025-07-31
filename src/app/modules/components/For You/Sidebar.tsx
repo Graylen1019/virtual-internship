@@ -10,35 +10,35 @@ import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 // --- NEW INTERFACES FOR SIDEBAR ITEMS ---
 interface BaseSidebarItem {
-  id: string;
-  label: string;
-  icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
-  disabled?: boolean;
+    id: string;
+    label: string;
+    icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
+    disabled?: boolean;
 }
 
 interface NavSidebarItem extends BaseSidebarItem {
-  href: string;
-  action?: never; // Explicitly state that href items don't have an action
+    href: string;
+    action?: never; // Explicitly state that href items don't have an action
 }
 
 interface ActionSidebarItem extends BaseSidebarItem {
-  action: () => void | Promise<void>;
-  href?: never; // Explicitly state that action items don't have an href
+    action: () => void | Promise<void>;
+    href?: never; // Explicitly state that action items don't have an href
 }
 
 type SidebarItem = NavSidebarItem | ActionSidebarItem;
 
 interface ForYouSidebarProps {
-  onSelect: (id: string) => void;
-  activeItem: string;
-  user: User | null;
+    onSelect: (id: string) => void;
+    activeItem: string;
+    user: User | null;
 }
 
 export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps) => {
 
     const sidebarItems: SidebarItem[] = [
-        { id: 'for-you', label: 'For you', icon: HomeIcon, href: "/dashboard/for-you" },
-        { id: 'my-library', label: 'My Library', icon: Bookmark, href: "/dashboard/my-library" },
+        { id: 'for-you', label: 'For you', icon: HomeIcon, href: "/for-you" },
+        { id: 'my-library', label: 'My Library', icon: Bookmark, href: "/my-library" },
         // For items that trigger a content switch on the same page, give them an 'action'
         // and ensure no 'href'. This maps to the ActionSidebarItem type.
         { id: 'highlights', label: 'Highlights', icon: Pencil, disabled: true, action: () => onSelect('highlights') },
@@ -46,20 +46,22 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
     ];
 
     const authItem: SidebarItem = user
-        ? { id: 'logout', label: 'Log Out', icon: LogOut, action: async () => {
-            try {
-                await signOut(auth);
-                // Redirect after successful logout
-                window.location.href = '/sign-in'; // Using window.location.href for full reload to clear state
-            } catch (error) {
-                console.error("Error signing out:", error);
-                alert("Failed to log out. Please try again.");
+        ? {
+            id: 'logout', label: 'Log Out', icon: LogOut, action: async () => {
+                try {
+                    await signOut(auth);
+                    // Redirect after successful logout
+                    window.location.href = '/sign-in'; // Using window.location.href for full reload to clear state
+                } catch (error) {
+                    console.error("Error signing out:", error);
+                    alert("Failed to log out. Please try again.");
+                }
             }
-        }}
+        }
         : { id: 'login', label: 'Log In', icon: LogIn, href: '/sign-in' }; // Login is a navigation link
 
     const footerItems: SidebarItem[] = [
-        { id: 'settings', label: 'Settings', icon: SettingsIcon, href: "/dashboard/settings" },
+        { id: 'settings', label: 'Settings', icon: SettingsIcon, href: "/settings" },
         { id: 'help-support', label: 'Help & Support', icon: HelpCircle, action: () => alert("Help & Support is coming soon!") },
         authItem,
     ];
@@ -73,9 +75,8 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                 <SidebarGroup className="mt-6 space-y-2">
                     {sidebarItems.map((item) => {
                         const IconComponent = item.icon;
-                        const commonClasses = `h-[56px] flex items-center gap-2 p-2 rounded-md ${
-                            activeItem === item.id ? 'bg-blue-100 text-blue-700 font-semibold' : ''
-                        } ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
+                        const commonClasses = `h-[56px] flex items-center gap-2 p-2 rounded-md ${activeItem === item.id ? 'bg-blue-100 text-blue-700 font-semibold' : ''
+                            } ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
                         const iconSize = 24; // Default icon size for main sidebar items
 
                         if (item.href) {
@@ -128,9 +129,8 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                 <SidebarGroup className="space-y-2">
                     {footerItems.map((item) => {
                         const IconComponent = item.icon;
-                        const commonClasses = `h-[56px] w-full flex items-center gap-2 p-2 rounded-md ${
-                            activeItem === item.id ? 'bg-blue-100 text-blue-700 font-semibold' : ''
-                        } ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
+                        const commonClasses = `h-[56px] w-full flex items-center gap-2 p-2 rounded-md ${activeItem === item.id ? 'bg-blue-100 text-blue-700 font-semibold' : ''
+                            } ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
                         const iconSize = 22; // Default icon size for footer items (adjust as needed)
 
                         if (item.href) {
