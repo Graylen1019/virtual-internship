@@ -1,5 +1,5 @@
-// app/context/ModalContext.tsx
 "use client";
+
 import React, { createContext, useContext, useState } from "react";
 
 type ModalContextType = {

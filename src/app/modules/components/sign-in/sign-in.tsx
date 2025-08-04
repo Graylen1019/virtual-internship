@@ -3,14 +3,13 @@
 import React, { useState } from 'react';
 import { GoogleAuthProvider, signInAnonymously, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../../../lib/utils/firebase-client'; // Ensure this path is correct for your Firebase setup
+import { auth, db } from '../../../lib/utils/firebase-client'; 
 
 import { Separator } from '@radix-ui/react-separator';
 import { AiFillGoogleCircle } from 'react-icons/ai';
-import { User2, X } from 'lucide-react'; // Added X icon for closing
+import { User2, X } from 'lucide-react'; 
 import { useRouter } from 'next/navigation';
 
-// Define props for the SignInForm component
 interface SignInFormProps {
   onClose: () => void;
   onSignUpClick: () => void;
@@ -25,15 +24,9 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
     const provider = new GoogleAuthProvider();
     const router = useRouter();
 
-    /**
-     * Handles Google sign-in using a popup.
-     * On success, redirects to the "/for-you" page.
-     * Displays error messages if sign-in fails.
-     */
     const signInWithGooglePopup = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
-                // Optional: Log Google Access Token if needed for debugging
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 if (credential && credential.accessToken) {
                     console.log("Google Access Token:", credential.accessToken);
@@ -41,7 +34,7 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
                 const user = result.user;
                 console.log("User signed in with Google:", user);
                 setMessage('Signed in with Google successfully!');
-                router.push("/for-you"); // Redirect on successful login
+                router.push("/for-you");
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -50,11 +43,6 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
             });
     };
 
-    /**
-     * Handles anonymous (guest) login.
-     * On success, redirects to the "/for-you" page.
-     * Displays error messages if sign-in fails.
-     */
     const handleGuestLogin = () => {
         signInAnonymously(auth)
             .then(() => {
@@ -69,16 +57,9 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
             });
     };
 
-    /**
-     * Handles email and password login.
-     * Fetches user data from Firestore after successful authentication (optional).
-     * On success, redirects to the "/for-you" page.
-     * Displays error messages for invalid credentials or other issues.
-     * @param e The form submission event.
-     */
     const handleEmailPasswordLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setMessage(''); // Clear previous messages
+        setMessage('');
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -86,19 +67,17 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
 
             console.log("User signed in with email/password:", user);
 
-            // Optional: Fetch additional user data from Firestore if you stored it during sign-up
-            // This assumes you have a 'users' collection where user documents are stored by UID.
             const userDocRef = doc(db, 'users', user.uid);
             const userDocSnap = await getDoc(userDocRef);
 
             if (userDocSnap.exists()) {
                 console.log("User data from Firestore:", userDocSnap.data());
                 setMessage('Logged in successfully!');
-                router.push("/for-you"); // Redirect on successful login
+                router.push("/for-you");
             } else {
                 console.log("No additional user data found in Firestore for this user.");
                 setMessage('Logged in successfully, but no additional profile data found.');
-                router.push("/for-you"); // Still redirect even if no extra data
+                router.push("/for-you");
             }
 
         } catch (error: unknown) {
@@ -112,7 +91,6 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
     };
 
     return (
-        // Modal overlay: fixed, full screen, semi-transparent background, centered content
         <div className='fixed inset-0 bg-[#000000be] backdrop-blur-[2px] flex justify-center items-center z-50'>
             <div className='w-full max-w-[400px] p-8 bg-white rounded-lg shadow-xl relative'>
                 {/* Close button */}
@@ -178,10 +156,10 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
                         Login
                     </button>
 
-                    {/* "Don't have an account?" link, now calling onSignUpClick */}
+                    {/* "Don't have an account?"*/}
                     <button
                     onClick={onSignUpClick}
-                        type="button" // Important: set type="button" to prevent form submission
+                        type="button" 
                         className='text-center text-blue-600 hover:underline mt-3 text-sm'
                     >
                         Don&apos;t have an account? Sign up!

@@ -1,14 +1,14 @@
 'use client'
 
-import Link from "next/link";
 import { useState } from "react";
 import { AiFillAudio, AiFillBulb, AiFillFileText } from "react-icons/ai";
 import { BiCrown } from "react-icons/bi";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { RiLeafLine } from "react-icons/ri";
-import { SignInForm } from "./modules/components/sign-in/sign-in"; // Adjust path if needed
-import { SignUpForm } from "./modules/components/sign-up/sign-up"; // Adjust path if needed
+import { SignInForm } from "./modules/components/sign-in/sign-in";
+import { SignUpForm } from "./modules/components/sign-up/sign-up"; 
 import { useModal } from "./context/modal-context";
+import Image from "next/image";
 
 
 export default function Home() {
@@ -36,15 +36,6 @@ export default function Home() {
   };
   const Year = new Date().getFullYear()
 
-  // Function to open the Sign In modal
-
-
-  // Function to open the Sign Up modal
-  
-
-  // Function to close any open modal
- 
-
   return (
     <>
       {/* Modals */}
@@ -66,12 +57,12 @@ export default function Home() {
         <nav className="nav">
           <div className="nav__wrapper">
             <figure className="nav__img--mask">
-              <img className="nav__img" src="/assets/logo.png" alt="logo" />
+              <Image width={200} height={200} className="nav__img" src="/assets/logo.png" alt="logo" />
             </figure>
             <ul className="nav__list--wrapper">
               <li className="nav__list nav__list--login">
                 <button
-                  onClick={openSignInModal} // Use the new function to open the modal
+                  onClick={openSignInModal}
                 >
                   Login
                 </button>
@@ -98,12 +89,12 @@ export default function Home() {
                     <br className="remove--tablet" />
                     and even people who don’t like to read.
                   </div>
-                  <button className="btn home__cta--btn" onClick={openSignInModal}> {/* Changed to open modal */}
+                  <button className="btn home__cta--btn" onClick={openSignInModal}>
                     Login
                   </button>
                 </div>
                 <figure className="landing__image--mask">
-                  <img src="/assets/landing.png" alt="landing" />
+                  <Image width={400} height={400} src="/assets/landing.png" alt="landing" />
                 </figure>
               </div>
             </div>
@@ -278,7 +269,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="reviews__btn--wrapper">
-                <button className="btn home__cta--btn" onClick={openSignInModal}> {/* Changed to open modal */}
+                <button className="btn home__cta--btn" onClick={openSignInModal}>
                   Login
                 </button>
               </div>

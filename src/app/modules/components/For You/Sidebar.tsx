@@ -1,4 +1,3 @@
-// components/ForYou.tsx
 "use client";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from "@/components/ui/sidebar";
 import { HomeIcon, Bookmark, Pencil, Search, SettingsIcon, LogIn, HelpCircle, LogOut, LucideProps } from "lucide-react";
@@ -6,10 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/app/lib/utils/firebase-client";
 import { signOut, User } from "firebase/auth";
-import { ForwardRefExoticComponent, RefAttributes, useState } from "react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
 import { useModal } from "@/app/context/modal-context";
 
-// --- NEW INTERFACES FOR SIDEBAR ITEMS ---
 
 
 interface BaseSidebarItem {
@@ -21,12 +19,12 @@ interface BaseSidebarItem {
 
 interface NavSidebarItem extends BaseSidebarItem {
     href: string;
-    action?: never; // Explicitly state that href items don't have an action
+    action?: never;
 }
 
 interface ActionSidebarItem extends BaseSidebarItem {
     action: () => void | Promise<void>;
-    href?: never; // Explicitly state that action items don't have an href
+    href?: never;
 }
 
 type SidebarItem = NavSidebarItem | ActionSidebarItem;
@@ -45,15 +43,9 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
     const sidebarItems: SidebarItem[] = [
         { id: 'for-you', label: 'For you', icon: HomeIcon, href: "/for-you" },
         { id: 'my-library', label: 'My Library', icon: Bookmark, href: "/my-library" },
-        // For items that trigger a content switch on the same page, give them an 'action'
-        // and ensure no 'href'. This maps to the ActionSidebarItem type.
         { id: 'highlights', label: 'Highlights', icon: Pencil, disabled: true, action: () => onSelect('highlights') },
         { id: 'search', label: 'Search', icon: Search, disabled: true, action: () => onSelect('search') },
     ];
-
-    // Login is a navigation link
-    // Replace navigation for login with a modal trigger
-
 
     const authItem: SidebarItem = user
         ? {
@@ -66,7 +58,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                 }
             }
         }
-        : { id: 'login', label: 'Log In', icon: LogIn, action: openSignInModal }; // Use action for modal
+        : { id: 'login', label: 'Log In', icon: LogIn, action: openSignInModal }; 
     const footerItems: SidebarItem[] = [
         { id: 'settings', label: 'Settings', icon: SettingsIcon, href: "/settings" },
         { id: 'help-support', label: 'Help & Support', icon: HelpCircle, action: () => alert("Help & Support is coming soon!") },
@@ -84,17 +76,13 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                         const IconComponent = item.icon;
                         const commonClasses = `h-[56px] flex items-center gap-2 p-2 rounded-md ${activeItem === item.id ? 'bg-blue-100 text-blue-700 font-semibold' : ''
                             } ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
-                        const iconSize = 24; // Default icon size for main sidebar items
+                        const iconSize = 24;
 
                         if (item.href) {
-                            // Render as Link if it has an href
                             return (
                                 <Link
                                     key={item.id}
                                     href={item.href}
-                                    // onClick here is primarily for setting active state,
-                                    // navigation is handled by Link.
-                                    // If you want to prevent navigation for disabled items, handle here too.
                                     onClick={item.disabled ? (e) => e.preventDefault() : () => onSelect(item.id)}
                                     className={commonClasses}
                                     aria-disabled={item.disabled}
@@ -103,21 +91,19 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                 </Link>
                             );
                         } else if (item.action) {
-                            // Render as button if it has an action but no href
                             return (
                                 <button
                                     key={item.id}
-                                    type="button" // Explicitly set to 'button' literal
-                                    onClick={item.disabled ? undefined : item.action} // Action only if not disabled
-                                    className={`${commonClasses} w-full`} // Buttons often need full width
+                                    type="button"
+                                    onClick={item.disabled ? undefined : item.action}
+                                    className={`${commonClasses} w-full`}
                                     aria-disabled={item.disabled}
-                                    disabled={item.disabled} // Native disabled prop for buttons
+                                    disabled={item.disabled}
                                 >
                                     <IconComponent size={iconSize} /> <p className="text-lg font-light">{item.label}</p>
                                 </button>
                             );
                         } else {
-                            // Fallback to div if no href and no action (e.g., purely decorative)
                             return (
                                 <div
                                     key={item.id}
@@ -138,10 +124,9 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                         const IconComponent = item.icon;
                         const commonClasses = `h-[56px] w-full flex items-center gap-2 p-2 rounded-md ${activeItem === item.id ? 'bg-blue-100 text-blue-700 font-semibold' : ''
                             } ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
-                        const iconSize = 22; // Default icon size for footer items (adjust as needed)
+                        const iconSize = 22;
 
                         if (item.href) {
-                            // Render as Link if it has an href
                             return (
                                 <Link
                                     key={item.id}
@@ -154,21 +139,19 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                 </Link>
                             );
                         } else if (item.action) {
-                            // Render as button if it has an action but no href
                             return (
                                 <button
                                     key={item.id}
-                                    type="button" // Explicitly set to 'button' literal
-                                    onClick={item.disabled ? undefined : item.action} // Action only if not disabled
+                                    type="button"
+                                    onClick={item.disabled ? undefined : item.action}
                                     className={commonClasses}
                                     aria-disabled={item.disabled}
-                                    disabled={item.disabled} // Native disabled prop for buttons
+                                    disabled={item.disabled}
                                 >
                                     <IconComponent size={iconSize} /> <p className="text-lg font-light">{item.label}</p>
                                 </button>
                             );
                         } else {
-                            // Fallback to div
                             return (
                                 <div
                                     key={item.id}

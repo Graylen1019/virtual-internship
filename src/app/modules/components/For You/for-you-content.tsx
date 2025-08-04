@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import Axios
+import axios from 'axios'; 
 import Image from 'next/image';
 import { Separator } from '@radix-ui/react-separator';
 
-/**
- * Defines the structure for a single book object.
- */
 interface Book {
     id: string;
     author: string;
@@ -20,15 +17,10 @@ interface Book {
     status: string;
     subscriptionRequired: boolean;
     summary: string;
-    tags: string[]; // Array of strings
+    tags: string[];
     bookDescription: string;
     authorDescription: string;
 }
-
-/**
- * Defines the props for the ForYouContent component.
- * This interface is intentionally empty because the component fetches its own data.
- */
 
 export const ForYouContent = () => {
     const [books, setBooks] = useState<Book[]>([]);
@@ -38,11 +30,9 @@ export const ForYouContent = () => {
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                // Use Axios to fetch data
                 const response = await axios.get<Book[]>('https://us-central1-summaristt.cloudfunctions.net/getBooks?status=selected');
-                setBooks(response.data); // Axios puts the response data in the .data property
+                setBooks(response.data); 
             } catch (err: unknown) {
-                // Axios errors have a response property if it's an HTTP error
                 if (axios.isAxiosError(err) && err.response) {
                     setError(`HTTP error! status: ${err.response.status} - ${err.response.statusText}`);
                 } else {
@@ -55,7 +45,7 @@ export const ForYouContent = () => {
         };
 
         fetchBooks();
-    }, []); // Empty dependency array means this effect runs once on mount
+    }, []); 
 
     if (loading) {
         return (
@@ -79,7 +69,6 @@ export const ForYouContent = () => {
             <h2 className="text-3xl font-bold mb-6">Welcome to your personalized feed!</h2>
             <p className="text-gray-700">This is where you&apos;ll find content tailored just for you based on your preferences and activity.</p>
             <div className="">
-                {/* Displaying dynamic book content */}
                 {books.map((book) => (
                     <div key={book.id} className="w-full bg-white p-6 rounded-lg shadow-md border border-gray-200 flex">
                         <div>

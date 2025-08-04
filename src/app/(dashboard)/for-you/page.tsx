@@ -3,7 +3,7 @@
 import { useModal } from '@/app/context/modal-context';
 import { ForYouContent } from '@/app/modules/components/For You/for-you-content';
 import { SignInForm } from '@/app/modules/components/sign-in/sign-in';
-import { SignUpForm } from '@/app/modules/components/sign-up/sign-up'; // <-- also required
+import { SignUpForm } from '@/app/modules/components/sign-up/sign-up';
 import { useState } from 'react';
 
 const ForYouPage = () => {
@@ -31,7 +31,7 @@ const ForYouPage = () => {
       {isSignUpOpen && (
         <SignUpForm
           onClose={closeSignUpModal}
-          onSignInClick={closeSignUpModal} // or bring back openSignInModal if needed
+          onSignInClick={closeSignUpModal}
         />
       )}
     </>
