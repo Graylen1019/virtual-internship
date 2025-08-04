@@ -15,11 +15,11 @@ import { useRouter } from 'next/navigation'; // Correct import for useRouter in 
 
 // Define props for the SignUpForm component
 interface SignUpFormProps {
-    onClose: () => void; // Function to call when the modal should close
-    onSignInClick: () => void; // Function to call when the user wants to switch to sign-in
+  onClose: () => void;
+  onSignInClick: () => void;
 }
 
-export const SignUpForm: React.FC<SignUpFormProps> = ({ onClose, onSignInClick }) => {
+export const SignUpForm = ({ onClose, onSignInClick }: SignUpFormProps) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -77,7 +77,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onClose, onSignInClick }
             });
 
             setMessage('Sign-up successful! Please sign in.');
-            onSignInClick(); // Call the prop to switch to the sign-in modal
         } catch (error: unknown) {
             console.error('Error signing up or adding user data:', error);
             if (error instanceof Error) {
@@ -94,7 +93,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onClose, onSignInClick }
             <div className='w-full max-w-[400px] p-8 bg-white rounded-lg shadow-xl relative'>
                 {/* Close button */}
                 <button
-                    onClick={onClose}
+                onClick={onClose}
                     className='absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-200'
                     aria-label="Close"
                 >
@@ -145,8 +144,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onClose, onSignInClick }
 
                     {/* "Already have an account? Sign in!" link, now calling onSignInClick */}
                     <button
+                    onClick={onSignInClick}
                         type="button" // Important: set type="button" to prevent form submission
-                        onClick={onSignInClick}
                         className='text-center text-blue-600 hover:underline mt-3 text-sm'
                     >
                         Already have an account? Sign in!

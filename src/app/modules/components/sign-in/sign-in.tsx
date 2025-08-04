@@ -12,11 +12,12 @@ import { useRouter } from 'next/navigation';
 
 // Define props for the SignInForm component
 interface SignInFormProps {
-    onClose: () => void; // Function to call when the modal should close
-    onSignUpClick: () => void; // Function to call when the user wants to switch to sign-up
+  onClose: () => void;
+  onSignUpClick: () => void;
 }
 
-export const SignInForm: React.FC<SignInFormProps> = ({ onClose, onSignUpClick }) => {
+
+export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -116,7 +117,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onClose, onSignUpClick }
             <div className='w-full max-w-[400px] p-8 bg-white rounded-lg shadow-xl relative'>
                 {/* Close button */}
                 <button
-                    onClick={onClose}
+                onClick={onClose}
                     className='absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-200'
                     aria-label="Close"
                 >
@@ -179,8 +180,8 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onClose, onSignUpClick }
 
                     {/* "Don't have an account?" link, now calling onSignUpClick */}
                     <button
+                    onClick={onSignUpClick}
                         type="button" // Important: set type="button" to prevent form submission
-                        onClick={onSignUpClick}
                         className='text-center text-blue-600 hover:underline mt-3 text-sm'
                     >
                         Don&apos;t have an account? Sign up!

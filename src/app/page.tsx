@@ -8,45 +8,56 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { RiLeafLine } from "react-icons/ri";
 import { SignInForm } from "./modules/components/sign-in/sign-in"; // Adjust path if needed
 import { SignUpForm } from "./modules/components/sign-up/sign-up"; // Adjust path if needed
+import { useModal } from "./context/modal-context";
 
 
 export default function Home() {
-  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false)
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false)
+  const { isSignInOpen, openSignInModal, closeSignInModal } = useModal();
 
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+
+  const openSignUpModal = () => {
+    setIsSignUpOpen(true);
+    closeSignInModal();
+  };
+
+  const closeSignUpModal = () => {
+    setIsSignUpOpen(false);
+  };
+
+  const switchToSignUp = () => {
+    closeSignInModal();
+    openSignUpModal();
+  };
+
+  const switchToSignIn = () => {
+    closeSignUpModal();
+    openSignInModal();
+  };
   const Year = new Date().getFullYear()
 
   // Function to open the Sign In modal
-  const openSignInModal = () => {
-    setIsSignInModalOpen(true);
-    setIsSignUpModalOpen(false); // Ensure sign-up modal is closed
-  };
+
 
   // Function to open the Sign Up modal
-  const openSignUpModal = () => {
-    setIsSignUpModalOpen(true);
-    setIsSignInModalOpen(false); // Ensure sign-in modal is closed
-  };
+  
 
   // Function to close any open modal
-  const closeModals = () => {
-    setIsSignInModalOpen(false);
-    setIsSignUpModalOpen(false);
-  };
+ 
 
   return (
     <>
-      {/* Modals are conditionally rendered based on state */}
-      {isSignInModalOpen && (
+      {/* Modals */}
+      {isSignInOpen && (
         <SignInForm
-          onClose={closeModals} // Pass a function to close the modal
-          onSignUpClick={openSignUpModal} // Pass a function to open the sign-up modal
+          onClose={closeSignInModal}
+          onSignUpClick={switchToSignUp}
         />
       )}
-      {isSignUpModalOpen && (
+      {isSignUpOpen && (
         <SignUpForm
-          onClose={closeModals} // Pass a function to close the modal
-          onSignInClick={openSignInModal} // Assuming SignUpForm will have a "Sign In" link
+          onClose={closeSignUpModal}
+          onSignInClick={switchToSignIn}
         />
       )}
 

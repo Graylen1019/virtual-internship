@@ -6,9 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/app/lib/utils/firebase-client";
 import { signOut, User } from "firebase/auth";
-import { ForwardRefExoticComponent, RefAttributes } from "react";
+import { ForwardRefExoticComponent, RefAttributes, useState } from "react";
+import { useModal } from "@/app/context/modal-context";
 
 // --- NEW INTERFACES FOR SIDEBAR ITEMS ---
+
+
 interface BaseSidebarItem {
     id: string;
     label: string;
@@ -36,6 +39,9 @@ interface ForYouSidebarProps {
 
 export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps) => {
 
+
+    const { openSignInModal } = useModal()
+
     const sidebarItems: SidebarItem[] = [
         { id: 'for-you', label: 'For you', icon: HomeIcon, href: "/for-you" },
         { id: 'my-library', label: 'My Library', icon: Bookmark, href: "/my-library" },
@@ -45,21 +51,22 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
         { id: 'search', label: 'Search', icon: Search, disabled: true, action: () => onSelect('search') },
     ];
 
+    // Login is a navigation link
+    // Replace navigation for login with a modal trigger
+
+
     const authItem: SidebarItem = user
         ? {
             id: 'logout', label: 'Log Out', icon: LogOut, action: async () => {
                 try {
                     await signOut(auth);
-                    // Redirect after successful logout
-                    window.location.href = '/sign-in'; // Using window.location.href for full reload to clear state
                 } catch (error) {
                     console.error("Error signing out:", error);
                     alert("Failed to log out. Please try again.");
                 }
             }
         }
-        : { id: 'login', label: 'Log In', icon: LogIn, href: '/sign-in' }; // Login is a navigation link
-
+        : { id: 'login', label: 'Log In', icon: LogIn, action: openSignInModal }; // Use action for modal
     const footerItems: SidebarItem[] = [
         { id: 'settings', label: 'Settings', icon: SettingsIcon, href: "/settings" },
         { id: 'help-support', label: 'Help & Support', icon: HelpCircle, action: () => alert("Help & Support is coming soon!") },

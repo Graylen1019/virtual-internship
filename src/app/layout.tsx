@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { ModalProvider } from "./context/modal-context";
 
 const geistSans = Roboto({
   variable: "--font-geist-sans",
@@ -24,13 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en">
+    <html lang="en">
 
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ModalProvider>
+
           {children}
-        </body>
-      </html>
+        </ModalProvider>
+      </body>
+    </html>
   );
 }
