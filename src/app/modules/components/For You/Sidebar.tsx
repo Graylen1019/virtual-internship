@@ -59,6 +59,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
             }
         }
         : { id: 'login', label: 'Log In', icon: LogIn, action: openSignInModal }; 
+        
     const footerItems: SidebarItem[] = [
         { id: 'settings', label: 'Settings', icon: SettingsIcon, href: "/settings" },
         { id: 'help-support', label: 'Help & Support', icon: HelpCircle, action: () => alert("Help & Support is coming soon!") },

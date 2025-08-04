@@ -34,6 +34,7 @@ export default function Home() {
     closeSignUpModal();
     openSignInModal();
   };
+  
   const Year = new Date().getFullYear()
 
   return (
