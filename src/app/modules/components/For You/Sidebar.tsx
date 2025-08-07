@@ -49,7 +49,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
 
     const authItem: SidebarItem = user
         ? {
-            id: 'logout', label: 'Log Out', icon: LogOut, action: async () => {
+            id: 'logout', label: 'Log Out', icon: LogIn, action: async () => {
                 try {
                     await signOut(auth);
                 } catch (error) {
@@ -58,7 +58,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                 }
             }
         }
-        : { id: 'login', label: 'Log In', icon: LogIn, action: openSignInModal };
+        : { id: 'login', label: 'Login', icon: LogOut, action: openSignInModal };
 
     const footerItems: SidebarItem[] = [
         { id: 'settings', label: 'Settings', icon: SettingsIcon, href: "/settings" },
@@ -72,7 +72,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                 <Image width={160} height={60} className="my-1.5" src={"/assets/logo.png"} alt="logo" />
             </SidebarHeader>
             <SidebarContent className="flex-1">
-                <SidebarGroup className="mt-6 space-y-2">
+                <SidebarGroup className="mt-5 space-y-2">
                     {sidebarItems.map((item) => {
                         const IconComponent = item.icon;
                         const commonClasses = `h-[56px] flex items-center gap-2 justify-start ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
@@ -90,7 +90,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     {activeItem === item.id && (
                                         <div className="h-[56px] w-[5px] absolute left-0 bg-green-400" />
                                     )}
-                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
+                                    <IconComponent className="ml-6" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </Link>
                             );
                         } else if (item.action) {
@@ -103,7 +103,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     aria-disabled={item.disabled}
                                     disabled={item.disabled}
                                 >
-                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
+                                    <IconComponent className="ml-6" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </button>
                             );
                         } else {
@@ -121,7 +121,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                     })}
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter className="py-4">
+            <SidebarFooter className="py-5">
                 <SidebarGroup className="space-y-2">
                     {footerItems.map((item) => {
                         const IconComponent = item.icon;
@@ -141,7 +141,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                         <div className="h-[56px] w-[5px] absolute left-0 bg-green-400" />
                                     )}
 
-                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
+                                    <IconComponent className="ml-6" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </Link>
                             );
                         } else if (item.action) {
@@ -154,7 +154,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     aria-disabled={item.disabled}
                                     disabled={item.disabled}
                                 >
-                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
+                                    <IconComponent className="ml-6" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </button>
                             );
                         } else {
@@ -165,7 +165,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     className={commonClasses}
                                     aria-disabled={item.disabled}
                                 >
-                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
+                                    <IconComponent className="ml-6" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </div>
                             );
                         }
