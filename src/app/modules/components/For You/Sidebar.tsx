@@ -23,7 +23,7 @@ interface NavSidebarItem extends BaseSidebarItem {
 }
 
 interface ActionSidebarItem extends BaseSidebarItem {
-    action: () => void | Promise<void>;
+    action?: () => void | Promise<void>;
     href?: never;
 }
 
@@ -58,11 +58,11 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                 }
             }
         }
-        : { id: 'login', label: 'Log In', icon: LogIn, action: openSignInModal }; 
-        
+        : { id: 'login', label: 'Log In', icon: LogIn, action: openSignInModal };
+
     const footerItems: SidebarItem[] = [
         { id: 'settings', label: 'Settings', icon: SettingsIcon, href: "/settings" },
-        { id: 'help-support', label: 'Help & Support', icon: HelpCircle, action: () => alert("Help & Support is coming soon!") },
+        { id: 'help-support', label: 'Help & Support', icon: HelpCircle, disabled: true, },
         authItem,
     ];
 
@@ -75,9 +75,8 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                 <SidebarGroup className="mt-6 space-y-2">
                     {sidebarItems.map((item) => {
                         const IconComponent = item.icon;
-                        const commonClasses = `h-[56px] flex items-center gap-2 p-2 rounded-md ${activeItem === item.id ? 'bg-blue-100 text-blue-700 font-semibold' : ''
-                            } ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
-                        const iconSize = 24;
+                        const commonClasses = `h-[56px] flex items-center gap-2 justify-start ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
+                        const iconSize = 23;
 
                         if (item.href) {
                             return (
@@ -85,10 +84,13 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     key={item.id}
                                     href={item.href}
                                     onClick={item.disabled ? (e) => e.preventDefault() : () => onSelect(item.id)}
-                                    className={commonClasses}
+                                    className={`${commonClasses} h-[56px]`}
                                     aria-disabled={item.disabled}
                                 >
-                                    <IconComponent size={iconSize} /> <p className="text-lg font-light">{item.label}</p>
+                                    {activeItem === item.id && (
+                                        <div className="h-[56px] w-[5px] absolute left-0 bg-green-400" />
+                                    )}
+                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </Link>
                             );
                         } else if (item.action) {
@@ -101,7 +103,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     aria-disabled={item.disabled}
                                     disabled={item.disabled}
                                 >
-                                    <IconComponent size={iconSize} /> <p className="text-lg font-light">{item.label}</p>
+                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </button>
                             );
                         } else {
@@ -123,9 +125,8 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                 <SidebarGroup className="space-y-2">
                     {footerItems.map((item) => {
                         const IconComponent = item.icon;
-                        const commonClasses = `h-[56px] w-full flex items-center gap-2 p-2 rounded-md ${activeItem === item.id ? 'bg-blue-100 text-blue-700 font-semibold' : ''
-                            } ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
-                        const iconSize = 22;
+                        const commonClasses = `h-[56px] w-full flex items-center gap-2 ${item.disabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`;
+                        const iconSize = 23;
 
                         if (item.href) {
                             return (
@@ -136,7 +137,11 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     className={commonClasses}
                                     aria-disabled={item.disabled}
                                 >
-                                    <IconComponent size={iconSize} /> <p className="text-lg font-light">{item.label}</p>
+                                    {activeItem === item.id && (
+                                        <div className="h-[56px] w-[5px] absolute left-0 bg-green-400" />
+                                    )}
+
+                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </Link>
                             );
                         } else if (item.action) {
@@ -149,7 +154,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     aria-disabled={item.disabled}
                                     disabled={item.disabled}
                                 >
-                                    <IconComponent size={iconSize} /> <p className="text-lg font-light">{item.label}</p>
+                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </button>
                             );
                         } else {
@@ -160,7 +165,7 @@ export const ForYouSidebar = ({ onSelect, activeItem, user }: ForYouSidebarProps
                                     className={commonClasses}
                                     aria-disabled={item.disabled}
                                 >
-                                    <IconComponent size={iconSize} /> <p className="text-lg font-light">{item.label}</p>
+                                    <IconComponent className="ml-5" size={iconSize} /> <p className="text-base font-light">{item.label}</p>
                                 </div>
                             );
                         }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 import Image from 'next/image';
 import { Separator } from '@radix-ui/react-separator';
+import { PlayCircleIcon } from 'lucide-react';
 
 interface Book {
     id: string;
@@ -31,7 +32,7 @@ export const ForYouContent = () => {
         const fetchBooks = async () => {
             try {
                 const response = await axios.get<Book[]>('https://us-central1-summaristt.cloudfunctions.net/getBooks?status=selected');
-                setBooks(response.data); 
+                setBooks(response.data);
             } catch (err: unknown) {
                 if (axios.isAxiosError(err) && err.response) {
                     setError(`HTTP error! status: ${err.response.status} - ${err.response.statusText}`);
@@ -45,7 +46,7 @@ export const ForYouContent = () => {
         };
 
         fetchBooks();
-    }, []); 
+    }, []);
 
     if (loading) {
         return (
@@ -65,38 +66,40 @@ export const ForYouContent = () => {
     }
 
     return (
-        <div className="w-full max-w-[1070px] mx-auto px-6 py-10">
-            <h2 className="text-3xl font-bold mb-6">Welcome to your personalized feed!</h2>
-            <p className="text-gray-700">This is where you&apos;ll find content tailored just for you based on your preferences and activity.</p>
-            <div className="">
-                {books.map((book) => (
-                    <div key={book.id} className="w-full bg-white p-6 rounded-lg shadow-md border border-gray-200 flex">
-                        <div>
+        <div className="w-full max-w-[1070px] mx-auto px-5 py-10">
+            <h2 className="text-[22px] font-bold mb-4 text-[#032b41]">Selected just for you</h2>
+            {books.map((book) => (
+                <div key={book.id} className="flex justify-between bg-[#fbefd6] rounded-sm p-6 mb-6 gap-6 lg:w-2/3 w-full ">
+                    <div className='w-[40%] text-[#032b41]'>
 
-                            <p className="text-gray-700 text-sm">{book.subTitle}</p>
-                        </div>
-                            <Separator color='black'  className='h-1' />
-                        <div className='flex'>
+                        <p className="leading-[1.15]">{book.subTitle}</p>
+                    </div>
+                    <div color='black' className=' w-[1px] bg-[#bac8ce]' />
+                    <div className='flex gap-4 w-[60%]'>
+                        <div>
 
                             <Image
                                 width={105}
                                 height={105}
                                 src={book.imageLink}
                                 alt={book.title}
-                                className="mt-4 w-full h-48 object-cover rounded-md"
+                                className=" min-w-[140px] w-[140px] h-[140px]"
                                 onError={(e) => { e.currentTarget.src = `https://placehold.co/400x200/cccccc/333333?text=No+Image`; }}
                             />
-                            <div>
-                                <h3 className="text-xl font-semibold mb-2 text-blue-600">{book.title}</h3>
+                        </div>
+                        <div className='w-full'>
+                            <h3 className="font-[600] text-[#032b41] mb-1">{book.title}</h3>
 
-                                <p className="text-sm text-gray-500 mt-2">Author: {book.author}</p>
+                            <p className="text-sm text-[#394547] mb-4">{book.author}</p>
+                            <div className='flex items-center gap-2'>
+                                <PlayCircleIcon size={24} className='size-8' />
+                                <p className='text-sm font-medium text-[#032b41]'>3 Mins 23 Seconds</p>
                             </div>
                         </div>
                     </div>
-                ))}
-
-
-            </div>
+                </div>
+            ))}
+            <h1>s</h1>
         </div>
     );
 };
