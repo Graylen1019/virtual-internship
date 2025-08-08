@@ -88,7 +88,7 @@ export const ForYouContent = () => {
                     <div className='w-full md:w-2/5 lg:w-1/3 text-[#032b41] flex-shrink-0'>
                         <p className="leading-[1.27] max-md:text-[14px]">{book.subTitle}</p>
                     </div>
-                    <div className='w-[1px] bg-[#bac8ce] ml-1 mr-6' />
+                    <div className='w-[1px] bg-[#bac8ce] ml-1 mr-6 md:ml-10' />
                     <div className='flex gap-4 w-full '>
                         <div className="flex-shrink-0">
                             <Image
