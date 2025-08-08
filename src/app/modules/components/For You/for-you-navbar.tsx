@@ -1,11 +1,10 @@
-import { SearchIcon } from 'lucide-react';
 import React from 'react';
-import { BiSearch, BiSearchAlt, BiSearchAlt2 } from 'react-icons/bi';
+import { BiSearchAlt2 } from 'react-icons/bi';
 
 export const ForYouNavbar = () => {
   return (
     <nav className='h-20 w-full border-b-2'>
-      <div className='relative mx-auto flex h-full max-w-[1070px] items-center justify-end px-8'>
+      <div className='relative mx-auto flex h-full w-full max-w-[742px] lg:max-w-[1070px] items-center justify-end px-8'>
         <div className='relative flex w-full max-w-[340px] items-center gap-2'>
           <input
             className=' text-sm font-medium tracking-tight h-[40px] w-full rounded-sm border-2 border-[#e1e7ea] bg-[#f1f6f4] px-4 pr-12 text-[#042330]'
