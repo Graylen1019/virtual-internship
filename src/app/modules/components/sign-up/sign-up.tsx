@@ -8,7 +8,7 @@ import { auth, db } from '../../../lib/utils/firebase-client';
 
 import { Separator } from '@radix-ui/react-separator';
 import { AiFillGoogleCircle } from 'react-icons/ai';
-import { X } from 'lucide-react';
+import { SubscriptIcon, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface SignUpFormProps {
@@ -35,6 +35,7 @@ export const SignUpForm = ({ onClose, onSignInClick }: SignUpFormProps) => {
                     displayName: user.displayName || 'Google User',
                     photoURL: user.photoURL || null,
                     createdAt: new Date(),
+                    subscriptionStatus: 'status'
                 }, { merge: true });
 
                 setMessage('Signed up with Google successfully!');
@@ -60,6 +61,7 @@ export const SignUpForm = ({ onClose, onSignInClick }: SignUpFormProps) => {
             await setDoc(userDocRef, {
                 email: user.email,
                 createdAt: new Date(),
+                subscriptonStatus: 'basic',
             });
 
             setMessage('Sign-up successful! Please sign in.');
