@@ -62,7 +62,7 @@ export const LibraryPageContent  = () => {
         });
 
         return () => unsubscribe(); // Cleanup the listener on unmount
-    }, []);
+    }, [auth]);
 
     // ... inside MyLibraryPage component
 

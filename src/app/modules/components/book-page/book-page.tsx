@@ -39,7 +39,6 @@ export const BookPageContent = () => {
     const [book, setBook] = useState<Book | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [libraryMessage, setLibraryMessage] = useState<string | null>(null);
     const [isBookInLibrary, setIsBookInLibrary] = useState(false);
 
     const { openSignInModal } = useModal();
@@ -106,7 +105,6 @@ export const BookPageContent = () => {
     const handleAddToLibrary = async () => {
         const currentUser = auth.currentUser;
         if (!book || !currentUser) {
-            setLibraryMessage("You must be logged in to add books.");
             openSignInModal()
             return;
         }
@@ -129,17 +127,14 @@ export const BookPageContent = () => {
             });
 
             setIsBookInLibrary(true);
-            setLibraryMessage(`"${book.title}" has been added to your library.`);
         } catch (err) {
             console.error("Failed to add book to library:", err);
-            setLibraryMessage("Failed to add book to library.");
         }
     };
 
     const handleRemoveFromLibrary = async () => {
         const currentUser = auth.currentUser;
         if (!book || !currentUser) {
-            setLibraryMessage("You must be logged in to remove books.");
             return;
         }
 
@@ -149,11 +144,9 @@ export const BookPageContent = () => {
 
             await deleteDoc(bookDocRef);
 
-            setLibraryMessage(`"${book.title}" has been removed from your library.`);
             setIsBookInLibrary(false); // Update state to reflect the change
         } catch (err) {
             console.error("Failed to remove book from library:", err);
-            setLibraryMessage("Failed to remove book from library.");
         }
     };
 
