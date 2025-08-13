@@ -13,32 +13,35 @@ export default function BookPage() {
     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
     const openSignUpModal = () => {
-            setIsSignUpOpen(true);
-            closeSignInModal();
-        };
-    
-        const closeSignUpModal = () => setIsSignUpOpen(false);
-    
+        setIsSignUpOpen(true);
+        closeSignInModal();
+    };
+
+    const closeSignUpModal = () => setIsSignUpOpen(false);
+
+    const handleSignInFromSignUp = () => {
+        closeSignUpModal();
+        openSignInModal();
+    };
+
 
     return (
         <>
-            <div className="max-w-5xl w-full mx-auto px-6 py-10">
 
-                <BookPageContent />
+            <BookPageContent />
 
-                {isSignInOpen && (
-                    <SignInForm
-                        onClose={closeSignInModal}
-                        onSignUpClick={openSignUpModal} />
-                )}
+            {isSignInOpen && (
+                <SignInForm
+                    onClose={closeSignInModal}
+                    onSignUpClick={openSignUpModal} />
+            )}
 
-                {isSignUpOpen && (
-                    <SignUpForm
-                        onClose={closeSignUpModal}
-                        onSignInClick={closeSignUpModal} />
-                )}
-                
-            </div>
+            {isSignUpOpen && (
+                <SignUpForm
+                    onClose={closeSignUpModal}
+                    onSignInClick={handleSignInFromSignUp} />
+            )}
+
         </>
     );
 }

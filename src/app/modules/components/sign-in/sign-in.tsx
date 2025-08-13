@@ -35,6 +35,7 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
                 console.log("User signed in with Google:", user);
                 setMessage('Signed in with Google successfully!');
                 router.push("/for-you");
+                onClose()
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -49,6 +50,7 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
                 console.log("Signed in anonymously!");
                 setMessage('Signed in as Guest!');
                 router.push("/for-you"); // Redirect on successful login
+                onClose()
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -78,6 +80,7 @@ export const SignInForm = ({ onClose, onSignUpClick }: SignInFormProps) => {
                 console.log("No additional user data found in Firestore for this user.");
                 setMessage('Logged in successfully, but no additional profile data found.');
                 router.push("/for-you");
+                onClose()
             }
 
         } catch (error: unknown) {
