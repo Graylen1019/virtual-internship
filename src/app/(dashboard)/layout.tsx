@@ -33,9 +33,12 @@ export default function DashboardLayout({
           activeItem={activeItem}
           user={user}
         />
-        <SidebarInset>
+        <SidebarInset className="overflow-x-hidden">
           <ForYouNavbar />
+          <div className="">
+
           {children} 
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </ModalProvider>
