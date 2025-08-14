@@ -114,7 +114,7 @@ export const ForYouContent = () => {
             <Carousel className="mb-8">
                 <CarouselContent className="flex gap-3 pl-3">
                     {recommendedBooks.map((book) => (
-                        <CarouselItem key={book.id} className="relative snap-start max-w-[200px] rounded-sm block pt-8 pb-3 pr-3 ">
+                        <CarouselItem key={book.id} className="hover:bg-[#f1f6f4] relative snap-start max-w-[200px] rounded-sm block pt-8 pb-3 pr-3 ">
                                 {book.subscriptionRequired && (
                                     <div className="absolute top-0 right-0 bg-[#032b41] px-2 h-5 flex items-center text-white text-[10px] rounded-full">
                                         Premium
@@ -159,7 +159,7 @@ export const ForYouContent = () => {
             <Carousel className="mb-8 snap-x pl-3">
                 <CarouselContent className="flex gap-3 ">
                     {suggestedBooks.map((book) => (
-                        <CarouselItem key={book.id} className="relative snap-start max-w-[200px] rounded-sm block pt-8 pb-3 pr-3 ">
+                        <CarouselItem key={book.id} className="hover:bg-[#f1f6f4] relative snap-start max-w-[200px] rounded-sm block pt-8 pb-3 pr-3 ">
                                 {book.subscriptionRequired && (
                                     <div className="absolute top-0 right-0 bg-[#032b41] px-2 h-5 flex items-center text-white text-[10px] rounded-full">
                                         Premium
