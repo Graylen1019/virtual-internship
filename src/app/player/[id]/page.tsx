@@ -1,14 +1,12 @@
-"use client";
+"use client"
 
-import { useState } from "react";
 import { useModal } from "@/app/context/modal-context";
+import { PlayerPageContent } from "@/app/modules/components/book-player/player-page/player-page";
 import { SignInForm } from "@/app/modules/components/sign-in/sign-in";
 import { SignUpForm } from "@/app/modules/components/sign-up/sign-up";
-import { BookPageContent } from "@/app/modules/components/book-page/book-page";
+import { useState } from "react";
 
-
-
-export default function BookPage() {
+const PlayerPage = () => {
     const { isSignInOpen, closeSignInModal, openSignInModal } = useModal();
     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
@@ -23,12 +21,10 @@ export default function BookPage() {
         closeSignUpModal();
         openSignInModal();
     };
-
-
     return (
         <>
 
-            <BookPageContent />
+            <PlayerPageContent />
 
             {isSignInOpen && (
                 <SignInForm
@@ -41,7 +37,8 @@ export default function BookPage() {
                     onClose={closeSignUpModal}
                     onSignInClick={handleSignInFromSignUp} />
             )}
-
         </>
     );
 }
+
+export default PlayerPage;

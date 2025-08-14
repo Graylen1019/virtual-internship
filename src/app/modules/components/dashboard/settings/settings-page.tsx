@@ -39,8 +39,7 @@ export const SettingsPageContent = () => {
         fetchUserData();
     }, [auth]);
     return ( 
-        <div>
-            <div className="w-full py-10 px-6 mx-auto">
+            <div className="max-w-[1070px] w-full py-10 px-6 mx-auto">
             <h1 className="text-left border-b-[1px] border-[#e1e7ea] pb-4 text-3xl text-[#032b41] mb-8 font-bold">
                 Settings
             </h1>
@@ -61,7 +60,6 @@ export const SettingsPageContent = () => {
                 <h1 className="text-lg font-bold text-[#032b41]">Email</h1>
                 <p className="text-[#032b41]">{userEmail || "Loading..."}</p>
             </div>
-        </div>
         </div>
     );
 }

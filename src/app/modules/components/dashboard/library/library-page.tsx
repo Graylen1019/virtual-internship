@@ -2,7 +2,8 @@ import { db } from "@/app/lib/utils/firebase-client";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { query, collection, getDocs } from "firebase/firestore";
-import { BookmarkIcon, Link, PlayCircleIcon, StarIcon } from "lucide-react";
+import { BookmarkIcon, PlayCircleIcon, StarIcon } from "lucide-react";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -25,8 +26,8 @@ interface Book {
     authorDescription: string;
 }
 
-export const LibraryPageContent  = () => {
-        const [books, setBooks] = useState<Book[]>([]);
+export const LibraryPageContent = () => {
+    const [books, setBooks] = useState<Book[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -93,61 +94,58 @@ export const LibraryPageContent  = () => {
             </div>
         );
     }
-    return ( 
+    return (
         <div className="w-full px-6 py-10 max-w-[1070px] mx-auto">
             <h1 className="text-2xl font-bold text-[#032b41] mb-4">Saved Books</h1>
             <h1 className="font-light text-[#394547] mb-4">{books.length} items</h1>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                <Carousel>
-                    <CarouselContent>
-                        {books.map((book) => (
-                            <CarouselItem
-                                key={book.id}
-                                className="ml-3 mt-1.5 max-w-[200px] w-full rounded-sm"
-                            >
-                                <Link href={`/book/${book.id}`} className="relative block rounded-sm pt-8 pb-2 mr-2">
-                                    {book.subscriptionRequired && (
-                                        <div className="absolute top-0 right-0 bg-[#032b41] px-2 h-5 flex items-center text-white text-[10px] rounded-full">
-                                            Premium
-                                        </div>
-                                    )}
+            <Carousel className="mb-6">
+                <CarouselContent>
+                    {books.map((book) => (
+                        <CarouselItem
+                            key={book.id}
+                            className="ml-3 mt-1.5 max-w-[200px] w-full rounded-sm"
+                        >
+                            <Link href={`/book/${book.id}`} className="relative block rounded-sm pt-8 pb-2 mr-2">
+                                {book.subscriptionRequired && (
+                                    <div className="absolute top-0 right-0 bg-[#032b41] px-2 h-5 flex items-center text-white text-[10px] rounded-full">
+                                        Premium
+                                    </div>
+                                )}
+                                <div className="w-full h-[172px] mb-2">
                                     <Image
                                         width={172}
                                         height={172}
                                         src={book.imageLink}
                                         alt={book.title}
                                         className="object-cover w-[172px] h-[172px] rounded"
-                                        onError={(
-                                            e: React.SyntheticEvent<HTMLImageElement, Event>
-                                        ) => {
-                                            e.currentTarget.src =
-                                                "https://placehold.co/172x172/cccccc/333333?text=No+Image";
-                                        }}
+                                        onError={({ currentTarget }) =>
+                                        (currentTarget.src =
+                                            "https://placehold.co/172x172/cccccc/333333?text=No+Image")
+                                        }
                                     />
-                                    <h1 className="font-bold text-[#032b41] mb-1 ">
-                                        {book.title}
-                                    </h1>
-                                    <h3 className="text-sm text-[#6b757b] font-light mb-1">
-                                        {book.author}
-                                    </h3>
-                                    <h1 className="text-sm text-[#394547] mb-2">{book.subTitle}</h1>
-                                    <div className="flex gap-2">
-                                        <div className="flex items-center gap-1 text-sm font-light text-[#6b757b]">
-                                            <PlayCircleIcon size={16} className="text-[#6b757b]" />
-                                            <span>sss</span>
-                                        </div>
-                                        <div className="flex items-center gap-1 text-sm font-light text-[#6b757b]">
-                                            <StarIcon size={16} />
-                                            <span>{book.averageRating}</span>
-                                        </div>
+                                </div>
+                                <h1 className="font-bold text-[#032b41] mb-1 ">
+                                    {book.title}
+                                </h1>
+                                <h3 className="text-sm text-[#6b757b] font-light mb-1">
+                                    {book.author}
+                                </h3>
+                                <h1 className="text-sm text-[#394547] mb-2">{book.subTitle}</h1>
+                                <div className="flex gap-2">
+                                    <div className="flex items-center gap-1 text-sm font-light text-[#6b757b]">
+                                        <PlayCircleIcon size={16} className="text-[#6b757b]" />
+                                        <span>sss</span>
                                     </div>
-                                </Link>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                </Carousel>
-
-            </div>
+                                    <div className="flex items-center gap-1 text-sm font-light text-[#6b757b]">
+                                        <StarIcon size={16} />
+                                        <span>{book.averageRating}</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
         </div>
     );
 }
