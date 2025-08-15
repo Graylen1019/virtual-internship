@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { getAuth } from "firebase/auth";
-import { Loader2Icon, LoaderPinwheelIcon } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
