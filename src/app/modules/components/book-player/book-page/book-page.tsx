@@ -8,6 +8,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Book {
     id: string;
@@ -29,24 +30,17 @@ interface Book {
 }
 
 export const BookPageContent = () => {
-
-
-    const [userSubscriptionStatus, setUserSubscriptionStatus] = useState<string | null>(null);
-
-
-
+    //TODO: deal with duration setting currently 04:40
+    //TODO: Skeleton
     const params = useParams<{ id: string }>();
     const [book, setBook] = useState<Book | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [isBookInLibrary, setIsBookInLibrary] = useState(false);
+    const [userSubscriptionStatus, setUserSubscriptionStatus] = useState<string | null>(null);
 
     const { openSignInModal } = useModal();
-
-
-
     const router = useRouter();
-
     const auth = getAuth();
 
     useEffect(() => {
@@ -166,11 +160,66 @@ export const BookPageContent = () => {
 
     if (loading) {
         return (
-            <div className="p-8 text-center">
-                <p className="text-xl text-gray-700">Loading book...</p>
+            <div className="max-w-5xl w-full mx-auto px-6 py-10 flex gap-8">
+                {/* Left content */}
+                <div className="flex-1">
+                    {/* Title */}
+                    <Skeleton className="h-8 w-2/3 mb-4" />
+                    {/* Author */}
+                    <Skeleton className="h-5 w-1/3 mb-4" />
+                    {/* Subtitle */}
+                    <Skeleton className="h-5 w-3/4 mb-4" />
+
+                    {/* Ratings / Info Row */}
+                    <div className="border-t border-b border-[#e1e7ea] py-4 mb-6">
+                        <div className="flex flex-wrap max-w-[400px] gap-y-3">
+                            {Array(4)
+                                .fill(0)
+                                .map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className="flex items-center w-1/2 text-[#032b41] font-medium text-sm gap-x-2"
+                                    >
+                                        <Skeleton className="h-4 w-40" />
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+
+                    {/* Read / Listen buttons */}
+                    <div className="flex gap-4 mb-6">
+                        <Skeleton className="h-12 w-40" />
+                        <Skeleton className="h-12 w-40" />
+                    </div>
+
+                    {/* Add to library */}
+                    <Skeleton className="h-4 w-40 mb-8" />
+
+                    {/* What's it about */}
+                    <Skeleton className="h-6 w-48 mb-4" />
+                    <div className="flex gap-3 mb-4">
+                        <Skeleton className="h-12 w-38" />
+                        <Skeleton className="h-12 w-38" />
+                    </div>
+                    <div className="space-y-2 mb-8">
+                        <Skeleton className="h-[300px] w-full" />
+                    </div>
+
+                    {/* About the author */}
+                    <Skeleton className="h-6 w-48 mb-4" />
+                    <div className="space-y-2">
+                        <Skeleton className="h-[300px] w-full" />
+                    </div>
+                </div>
+
+                {/* Right image */}
+                <div className="h-[300px] w-[300px] min-w-[300px]">
+                    <Skeleton className="w-[300px] h-[300px]" />
+                </div>
             </div>
         );
     }
+
 
     if (error) {
         return (

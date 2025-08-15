@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { getAuth } from "firebase/auth";
+import { Loader2Icon, LoaderPinwheelIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -46,8 +47,8 @@ export const PlayerPageContent = () => {
 
     if (loading) {
         return (
-            <div className="p-8 text-center">
-                <p className="text-xl text-gray-700">Loading book...</p>
+            <div className="relative w-full h-full flex flex-col items-center justify-center">
+                <Loader2Icon size={64} className="animate-spin" />
             </div>
         );
     }
@@ -73,10 +74,10 @@ export const PlayerPageContent = () => {
 
     return (
         <div className="relative w-full h-[calc(100vh - 160px)] flex flex-col">
-                <div className="whitespace-pre-line py-10 px-6 max-w-[800px] mx-auto">
-                    <h1 className="text-[#032b41] text-2xl border-b-[1px] mb-8 pb-4 font-bold">{book.title}</h1>
-                    <div className="whitespace-pre-line leading-snug text-[#032b41]">{book.summary}</div>
-                </div>
+            <div className="whitespace-pre-line py-10 px-6 max-w-[800px] mx-auto">
+                <h1 className="text-[#032b41] text-2xl border-b-[1px] mb-8 pb-4 font-bold">{book.title}</h1>
+                <div className="whitespace-pre-line leading-snug text-[#032b41]">{book.summary}</div>
+            </div>
         </div>
     );
 };

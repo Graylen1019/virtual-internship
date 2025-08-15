@@ -113,6 +113,7 @@ const ForYouSkeleton = () => {
 }
 
 export const ForYouContent = () => {
+    //TODO: Deal with duration on books currently sss
     const [books, setBooks] = useState<Book[]>([]);
     const [recommendedBooks, setRecommendedBooks] = useState<Book[]>([]);
     const [suggestedBooks, setSuggestedBooks] = useState<Book[]>([]);
