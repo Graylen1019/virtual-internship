@@ -150,7 +150,7 @@ export const BookPageContent = () => {
         e.preventDefault();
         if (!currentUser) return openSignInModal();
         if (book?.subscriptionRequired && userSubscriptionStatus !== "premium") {
-            router.push("/upgrade-subscription");
+            router.push("/choose-plan");
         } else {
             router.push(`/player/${book?.id}`);
         }

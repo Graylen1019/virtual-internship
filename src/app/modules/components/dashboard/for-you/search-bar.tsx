@@ -106,7 +106,6 @@ export const SearchBar = () => {
       )}
 
       {/* Loading & Error */}
-      {loading && <p className="mt-2 text-sm text-gray-500">Loading...</p>}
       {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
     </div>
   );
