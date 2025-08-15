@@ -117,7 +117,6 @@ export const ForYouContent = () => {
     const [recommendedBooks, setRecommendedBooks] = useState<Book[]>([]);
     const [suggestedBooks, setSuggestedBooks] = useState<Book[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchAllBooks = async () => {
@@ -133,9 +132,7 @@ export const ForYouContent = () => {
                 setSuggestedBooks(suggested.data);
             } catch (err: unknown) {
                 if (axios.isAxiosError(err) && err.response) {
-                    setError(`HTTP error! status: ${err.response.status} - ${err.response.statusText}`);
                 } else {
-                    setError("Unknown error");
                 }
                 console.error("Failed to fetch books:", err);
             } finally {

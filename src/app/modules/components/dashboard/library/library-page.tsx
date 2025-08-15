@@ -2,13 +2,11 @@ import { db } from "@/app/lib/utils/firebase-client";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { query, collection, getDocs } from "firebase/firestore";
-import { BookmarkIcon, PlayCircleIcon, StarIcon } from "lucide-react";
+import { PlayCircleIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { Skeleton } from "@/components/ui/skeleton";
-import { BookPageContent } from "../../book-player/book-page/book-page";
 import { NoUserContent } from "../auth";
 
 interface Book {
@@ -78,7 +76,6 @@ const LibraryPageContentSkeleton = () => {
 export const LibraryPageContent = () => {
     const [books, setBooks] = useState<Book[]>([]);
     const [loading, setLoading] = useState<boolean>();
-    const [error, setError] = useState<string | null>(null);
 
     const auth = getAuth();
     // ... rest of the component
@@ -87,7 +84,6 @@ export const LibraryPageContent = () => {
             const currentUser = auth.currentUser;
             if (currentUser) {
                 setLoading(true);
-                setError(null);
                 try {
                     const q = query(collection(db, "users", userId, "myBooks"));
                     const querySnapshot = await getDocs(q);
@@ -98,14 +94,12 @@ export const LibraryPageContent = () => {
                     setBooks(fetchedBooks);
                 } catch (err) {
                     console.error("Failed to fetch books:", err);
-                    setError("Failed to load your library. Please try again later.");
                 } finally {
                     setLoading(false);
                 }
             } else {
                 // Handle the case where there is no authenticated user
                 setLoading(false)
-                setError(`boop`)
             }
         };
 
