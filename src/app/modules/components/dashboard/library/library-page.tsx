@@ -38,29 +38,23 @@ const LibraryPageContentSkeleton = () => {
             <Carousel className="mb-6">
                 <CarouselContent>
                     {new Array(3).fill(0).map((_, index) => (
-
                         <CarouselItem
                             key={index}
                             className="ml-3 mt-1.5 max-w-[200px] w-full rounded-sm"
                         >
                             <div className="relative block rounded-sm pt-8 pb-2 mr-2">
-
                                 <div className="w-full h-[172px] mb-2">
                                     <Skeleton className="w-[172px] h-[172px]" />
                                 </div>
                                 <div className="w-full mb-3">
-
                                     <Skeleton className="h-4 w-full" />
                                 </div>
                                 <div className="w-full mb-3">
-
                                     <Skeleton className="h-3 w-1/2" />
                                 </div>
                                 <div className="w-full mb-3">
-
                                     <Skeleton className="h-12 w-full" />
                                 </div>
-
                                 <div className="flex gap-2">
                                     <Skeleton className="w-1/2 h-3" />
                                 </div>
@@ -75,31 +69,34 @@ const LibraryPageContentSkeleton = () => {
 
 export const LibraryPageContent = () => {
     const [books, setBooks] = useState<Book[]>([]);
-    const [loading, setLoading] = useState<boolean>();
+    const [loading, setLoading] = useState<boolean>(true);
+    const [durations, setDurations] = useState<{ [key: string]: number }>({}); // bookId -> duration
 
     const auth = getAuth();
-    // ... rest of the component
+
     useEffect(() => {
         const fetchMyBooks = async (userId: string) => {
-            const currentUser = auth.currentUser;
-            if (currentUser) {
-                setLoading(true);
-                try {
-                    const q = query(collection(db, "users", userId, "myBooks"));
-                    const querySnapshot = await getDocs(q);
-                    const fetchedBooks: Book[] = [];
-                    querySnapshot.forEach((doc) => {
-                        fetchedBooks.push({ id: doc.id, ...doc.data() } as Book);
+            setLoading(true);
+            try {
+                const q = query(collection(db, "users", userId, "myBooks"));
+                const querySnapshot = await getDocs(q);
+                const fetchedBooks: Book[] = [];
+                querySnapshot.forEach((doc) => {
+                    fetchedBooks.push({ id: doc.id, ...doc.data() } as Book);
+                });
+                setBooks(fetchedBooks);
+
+                // Preload audio durations
+                fetchedBooks.forEach((book) => {
+                    const audio = new Audio(book.audioLink);
+                    audio.addEventListener("loadedmetadata", () => {
+                        setDurations((prev) => ({ ...prev, [book.id]: audio.duration }));
                     });
-                    setBooks(fetchedBooks);
-                } catch (err) {
-                    console.error("Failed to fetch books:", err);
-                } finally {
-                    setLoading(false);
-                }
-            } else {
-                // Handle the case where there is no authenticated user
-                setLoading(false)
+                });
+            } catch (err) {
+                console.error("Failed to fetch books:", err);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -112,11 +109,18 @@ export const LibraryPageContent = () => {
             }
         });
 
-        return () => unsubscribe(); // Cleanup the listener on unmount
+        return () => unsubscribe();
     }, [auth]);
 
-    if (loading) return <LibraryPageContentSkeleton />
-    if (!auth.currentUser) return <NoUserContent />
+    const formatTime = (time?: number) => {
+        if (!time) return "00:00";
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    };
+
+    if (loading) return <LibraryPageContentSkeleton />;
+    if (!auth.currentUser) return <NoUserContent />;
 
     return (
         <div className="w-full px-6 py-10 max-w-[1070px] mx-auto">
@@ -143,22 +147,17 @@ export const LibraryPageContent = () => {
                                         alt={book.title}
                                         className="object-cover w-[172px] h-[172px] rounded"
                                         onError={({ currentTarget }) =>
-                                        (currentTarget.src =
-                                            "https://placehold.co/172x172/cccccc/333333?text=No+Image")
+                                            (currentTarget.src = "https://placehold.co/172x172/cccccc/333333?text=No+Image")
                                         }
                                     />
                                 </div>
-                                <h1 className="font-bold text-[#032b41] mb-1 ">
-                                    {book.title}
-                                </h1>
-                                <h3 className="text-sm text-[#6b757b] font-light mb-1">
-                                    {book.author}
-                                </h3>
+                                <h1 className="font-bold text-[#032b41] mb-1">{book.title}</h1>
+                                <h3 className="text-sm text-[#6b757b] font-light mb-1">{book.author}</h3>
                                 <h1 className="text-sm text-[#394547] mb-2">{book.subTitle}</h1>
                                 <div className="flex gap-2">
                                     <div className="flex items-center gap-1 text-sm font-light text-[#6b757b]">
                                         <PlayCircleIcon size={16} className="text-[#6b757b]" />
-                                        <span>sss</span>
+                                        <span>{formatTime(durations[book.id])}</span>
                                     </div>
                                     <div className="flex items-center gap-1 text-sm font-light text-[#6b757b]">
                                         <StarIcon size={16} />
