@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ChevronDown, FileIcon, HandshakeIcon, LeafIcon } from "lucide-react";
+import { FileIcon, HandshakeIcon, LeafIcon } from "lucide-react";
 import Image from "next/image";
 
 const PlanPage = () => {
