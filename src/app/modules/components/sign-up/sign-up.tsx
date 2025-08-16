@@ -8,7 +8,7 @@ import { auth, db } from '../../../lib/utils/firebase-client';
 
 import { Separator } from '@radix-ui/react-separator';
 import { AiFillGoogleCircle } from 'react-icons/ai';
-import { SubscriptIcon, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface SignUpFormProps {
