@@ -42,7 +42,6 @@ export const SearchBar = () => {
 
   return (
     <div className="relative w-full max-w-[340px]">
-      {/* Input */}
       <div className="relative flex w-full items-center gap-2">
         <input
           value={search}
@@ -56,7 +55,6 @@ export const SearchBar = () => {
         </div>
       </div>
 
-      {/* Dropdown */}
       {books.length > 0 && (
         <div className="flex flex-col min-w-[440px] max-w-[440px] max-h-[640px] ml-auto overflow-y-auto p-4 absolute top-22 right-0 bg-white border border-[#e1e7ea] shadow-[0_0_6px_0_rgba(0,0,0,0.14)] z-50">
           {books.map((book) => (
@@ -90,7 +88,6 @@ export const SearchBar = () => {
         </div>
       )}
 
-      {/* Loading & Error */}
       {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
     </div>
   );

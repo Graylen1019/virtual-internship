@@ -96,10 +96,8 @@ export const SignUpForm = ({ onClose, onSignInClick }: SignUpFormProps) => {
                     Sign up with Google
                 </button>
 
-                {/* Separator */}
                 <Separator className='my-4 w-full h-[1px] bg-gray-300' />
 
-                {/* Email and Password Sign-up Form */}
                 <form onSubmit={handleSignUp} className='flex flex-col gap-4'>
                     <input
                         type="email"

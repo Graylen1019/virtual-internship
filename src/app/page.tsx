@@ -38,7 +38,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Modals */}
       {isSignInOpen && (
         <SignInForm
           onClose={closeSignInModal}
@@ -52,7 +51,6 @@ export default function Home() {
         />
       )}
 
-      {/* Main Page Content */}
       <>
         <nav className="nav">
           <div className="nav__wrapper">

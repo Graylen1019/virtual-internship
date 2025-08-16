@@ -220,18 +220,15 @@ export const ForYouContent = () => {
 
     return (
         <div className="w-full max-w-[802px] lg:max-w-[1070px] mx-auto px-6 py-10 overflow-x-hidden">
-            {/* Selected Books */}
             <h2 className="text-[22px] font-bold mb-4 text-[#032b41]">Selected just for you</h2>
             {books.map((book) => (
                 <BookCard key={book.id} book={book} />
             ))}
 
-            {/* Recommended Carousel */}
             <h1 className="text-[22px] font-bold text-[#032b41] mb-4">Recommended For You</h1>
             <h1 className="font-light text-[#394547] mb-4">We think you&apos;ll like these</h1>
             <BookCarousel books={recommendedBooks} />
 
-            {/* Suggested Carousel */}
             <h1 className="text-[22px] font-bold text-[#032b41] mb-4">Suggested Books</h1>
             <h1 className="font-light text-[#394547] mb-4">Browse these books</h1>
             <BookCarousel books={suggestedBooks} />
