@@ -112,31 +112,45 @@ const PlanPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-6 max-w-[680px] mx-auto">
-                    {plans.map((plan) => (
-                        <div
-                            key={plan.id}
-                            onClick={() => setSelectedPlan(plan)}
-                            className={`flex gap-6 p-6 border-4 rounded-xs cursor-pointer transition-colors duration-200 ${selectedPlan?.id === plan.id ? "border-[#2bd97c]" : "border-[#bac8ce]"
-                                }`}
-                        >
-                            <div className="relative w-6 h-6 rounded-[50%] border-2 border-[#000] flex items-center justify-center">
-                                {selectedPlan?.id === plan.id && (
-                                    <div className="absolute w-1.5 h-1.5 bg-[#000] rounded-[50%]"></div>
-                                )}
+                    {plans.map((plan, index) => (
+                        <>
+                            <div
+                                key={plan.id}
+                                onClick={() => setSelectedPlan(plan)}
+                                className={`flex gap-6 p-6 border-4 rounded-xs cursor-pointer transition-colors duration-200 bg-[#f1f6f4] ${selectedPlan?.id === plan.id ? "border-[#2bd97c]" : "border-[#bac8ce]"}`}
+                            >
+                                <div className="relative w-6 h-6 rounded-[50%] border-2 border-[#000] flex items-center justify-center">
+                                    {selectedPlan?.id === plan.id && (
+                                        <div className="absolute w-1.5 h-1.5 bg-[#000] rounded-[50%]"></div>
+                                    )}
+                                </div>
+                                <div>
+                                    <div className="text-lg font-semibold text-[#032b41] mb-1">{plan.name}</div>
+                                    <div className="text-2xl font-bold text-[#032b41] mb-1">
+                                        ${plan.prices[0]?.amount / 100 || "0"}/{plan.prices[0]?.interval}
+                                    </div>
+                                    <div className="text-[#6b757b] text-sm">{plan.description}</div>
+                                </div>
                             </div>
                             <div>
-                                <div className="text-lg font-semibold text-[#032b41] mb-1">{plan.name}</div>
-                                <div className="text-2xl font-bold text-[#032b41] mb-1">
-                                    ${plan.prices[0]?.amount / 100 || "0"}/{plan.prices[0]?.interval}
-                                </div>
-                                <div className="text-[#6b757b] text-sm">{plan.description}</div>
+                                {index < plans.length - 1 && (
+                                    <div className="text-sm text-[#6b757b] flex items-center gap-2 max-w-[240px] my-px mx-auto">
+                                        <div className="h-px w-20 bg-[#bac8ce]" />
+                                        <div className="">
+                                            or
+                                        </div>
+                                        <div className="h-px w-20 bg-[#bac8ce]" />
+
+                                    </div>
+                                )}
                             </div>
-                        </div>
+                        </>
                     ))}
                 </div>
 
                 {/* Checkout button */}
                 <div className="bg-[#fff] sticky bottom-0 z-[1] py-8 flex flex-col items-center gap-4">
+                    {/* Checkout button */}
                     <button
                         onClick={() => {
                             if (selectedPlan?.prices[0]?.id) handleCheckout(selectedPlan.prices[0].id);
@@ -144,7 +158,11 @@ const PlanPage = () => {
                         }}
                         className="bg-[#2bd97c] text-[#032b41] w-[300px] h-10 rounded-sm transition-colors duration-200 flex items-center justify-center min-w-[180px] hover:bg-[#20ba68]"
                     >
-                        Start your free 7-day trial
+                        <span>
+                            {selectedPlan?.description?.toLowerCase().includes("7")
+                                ? "Start your 7-day trial"
+                                : "Start your first month"}
+                        </span>
                     </button>
 
                     <div className="text-xs text-[#6b757b] text-center">
@@ -218,52 +236,87 @@ const PlanPage = () => {
             </div>
 
             {/* Footer */}
-            <footer className="w-full bg-[#f1f6f4] py-10 text-[#394547] text-sm">
-                <div className="max-w-[1070px] mx-auto px-6">
-                    <div className="grid grid-cols-4 gap-6 mb-6">
-                        {/* Footer blocks repeated */}
-                        <div>
-                            <h4 className="font-semibold mb-2">Actions</h4>
-                            <ul>
-                                <li>Summarist Magazine</li>
-                                <li>Cancel Subscription</li>
-                                <li>Help</li>
-                                <li>Contact us</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold mb-2">Useful Links</h4>
-                            <ul>
-                                <li>Pricing</li>
-                                <li>Summarist Business</li>
-                                <li>Gift Cards</li>
-                                <li>Authors & Publishers</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold mb-2">Company</h4>
-                            <ul>
-                                <li>About</li>
-                                <li>Careers</li>
-                                <li>Partners</li>
-                                <li>Code of Conduct</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-semibold mb-2">Other</h4>
-                            <ul>
-                                <li>Sitemap</li>
-                                <li>Legal Notice</li>
-                                <li>Terms of Service</li>
-                                <li>Privacy Policies</li>
-                            </ul>
-                        </div>
+           <section id="footer">
+          <div className="container">
+            <div className="row">
+              <div className="footer__top--wrapper">
+                <div className="footer__block">
+                  <div className="footer__link--title">Actions</div>
+                  <div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Summarist Magazine</a>
                     </div>
-                    <div className="text-center text-[#6b757b]">
-                        Copyright &copy; {Year} Summarist.
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Cancel Subscription</a>
                     </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Help</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Contact us</a>
+                    </div>
+                  </div>
                 </div>
-            </footer>
+                <div className="footer__block">
+                  <div className="footer__link--title">Useful Links</div>
+                  <div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Pricing</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Summarist Business</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Gift Cards</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Authors & Publishers</a>
+                    </div>
+                  </div>
+                </div>
+                <div className="footer__block">
+                  <div className="footer__link--title">Company</div>
+                  <div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">About</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Careers</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Partners</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Code of Conduct</a>
+                    </div>
+                  </div>
+                </div>
+                <div className="footer__block">
+                  <div className="footer__link--title">Other</div>
+                  <div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Sitemap</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Legal Notice</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Terms of Service</a>
+                    </div>
+                    <div className="footer__link--wrapper">
+                      <a className="footer__link">Privacy Policies</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="footer__copyright--wrapper">
+                <div className="footer__copyright">
+                  Copyright &copy; {Year} Summarist.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         </>
     );
 };
