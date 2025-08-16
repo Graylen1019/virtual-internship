@@ -7,21 +7,19 @@ import { app, db } from "@/app/lib/utils/firebase-client";
 import Image from "next/image";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@radix-ui/react-accordion";
 import { FileIcon, LeafIcon, HandshakeIcon } from "lucide-react";
-import { usePlans } from "@/hooks/use-plans"; // <-- import the hook
+import { usePlans } from "@/hooks/use-plans"; 
 
 const PlanPage = () => {
-    const { plans, selectedPlan, setSelectedPlan } = usePlans(); // <-- use hook
+    const { plans, selectedPlan, setSelectedPlan } = usePlans();
     const [user, setUser] = useState<User | null>(null);
     const Year = new Date().getFullYear();
 
-    // Track auth user
     useEffect(() => {
         const auth = getAuth(app);
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => setUser(firebaseUser));
         return unsubscribe;
     }, []);
 
-    // Checkout logic
     const handleCheckout = async (priceId: string) => {
         if (!user?.uid) {
             alert("You must be logged in to start a subscription.");
@@ -62,7 +60,6 @@ const PlanPage = () => {
 
     return (
         <>
-            {/* Hero Section */}
             <div className="relative text-center w-full pt-12 mb-6 before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-[#032b41] before:rounded-br-[16rem] before:rounded-bl-[16rem] before:-z-10">
                 <div className="max-w-[1000px] mx-auto text-[#fff] px-6">
                     <div className="text-5xl font-bold mb-10 leading-normal">
@@ -77,7 +74,6 @@ const PlanPage = () => {
                 </div>
             </div>
 
-            {/* Features */}
             <div className="w-full max-w-[1070px] px-6 py-10 mx-auto">
                 <div className="grid grid-cols-3 justify-items-center text-center gap-6 max-w-[800px] mx-auto mb-14">
                     <div>
@@ -106,7 +102,6 @@ const PlanPage = () => {
                     </div>
                 </div>
 
-                {/* Plans */}
                 <div className="text-3xl text-[#032b41] text-center mb-8 font-bold">
                     Choose the plan that fits you.
                 </div>
@@ -148,9 +143,7 @@ const PlanPage = () => {
                     ))}
                 </div>
 
-                {/* Checkout button */}
                 <div className="bg-[#fff] sticky bottom-0 z-[1] py-8 flex flex-col items-center gap-4">
-                    {/* Checkout button */}
                     <button
                         onClick={() => {
                             if (selectedPlan?.prices[0]?.id) handleCheckout(selectedPlan.prices[0].id);
@@ -170,7 +163,6 @@ const PlanPage = () => {
                     </div>
                 </div>
 
-                {/* Accordion / FAQ */}
                 <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1" className="">
                         <AccordionTrigger>
@@ -235,7 +227,6 @@ const PlanPage = () => {
                 </Accordion>
             </div>
 
-            {/* Footer */}
            <section id="footer">
           <div className="container">
             <div className="row">

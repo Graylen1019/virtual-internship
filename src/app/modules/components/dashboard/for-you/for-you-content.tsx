@@ -15,16 +15,8 @@ interface Book {
     subTitle: string;
     imageLink: string;
     audioLink: string;
-    totalRating: number;
     averageRating: number;
-    keyIdeas: number;
-    type: string;
-    status: string;
     subscriptionRequired: boolean;
-    summary: string;
-    tags: string[];
-    bookDescription: string;
-    authorDescription: string;
 }
 
 const ForYouSkeleton = () => (
@@ -96,7 +88,7 @@ const BookCard = ({ book }: BookCardProps) => {
     }, []);
 
     return (
-        <div className="relative flex bg-[#fbefd6] rounded-xs flex-col md:flex-row gap-3 p-6 mb-6 w-full xl:w-2/3 justify-around">
+        <Link href={`/book/${book.id}`} className="relative flex bg-[#fbefd6] rounded-xs flex-col md:flex-row gap-3 p-6 mb-6 w-full xl:w-2/3 justify-around">
             <audio ref={audioRef} src={book.audioLink} onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)} />
             <div className="w-full md:w-[35%] text-[#032b41] flex-shrink-0">
                 <h1 className="max-md:text-[14px]">{book.subTitle}</h1>
@@ -124,7 +116,7 @@ const BookCard = ({ book }: BookCardProps) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 
@@ -133,7 +125,7 @@ interface BookCarouselProps {
 }
 
 const BookCarousel = ({ books }: BookCarouselProps) => {
-    const [durations, setDurations] = useState<{ [key: string]: number }>({}); // bookId -> duration
+    const [durations, setDurations] = useState<{ [key: string]: number }>({});
 
     useEffect(() => {
         books.forEach((book) => {

@@ -4,8 +4,8 @@ import { collection, getDocs } from "firebase/firestore";
 
 export interface Price {
   id: string;
-  amount: number; // in cents
-  interval: string; // "month" | "year"
+  amount: number;
+  interval: string;
 }
 
 export interface Plan {
@@ -28,7 +28,6 @@ export const usePlans = () => {
           productsSnapshot.docs.map(async (doc) => {
             const data = doc.data();
 
-            // Fetch subcollection 'prices' for this product
             const pricesSnapshot = await getDocs(
               collection(db, "products", doc.id, "prices")
             );

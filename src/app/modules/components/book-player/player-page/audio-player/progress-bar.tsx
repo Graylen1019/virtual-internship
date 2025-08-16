@@ -13,7 +13,6 @@ export const ProgressBar = ({ audioRef }: ProgressBarProps) => {
         const audio = audioRef.current;
         if (!audio) return;
 
-        // Metadata may already be loaded
         if (!isNaN(audio.duration) && audio.duration > 0) setDuration(audio.duration);
 
         const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
@@ -41,7 +40,6 @@ export const ProgressBar = ({ audioRef }: ProgressBarProps) => {
         return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
     };
 
-    // Calculate percentage of progress
     const progressPercent = duration ? (currentTime / duration) * 100 : 0;
 
     return (

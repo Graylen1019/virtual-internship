@@ -9,25 +9,12 @@ interface Book {
   id: string;
   author: string;
   title: string;
-  subTitle: string;
   imageLink: string;
-  audioLink: string;
-  totalRating: number;
-  averageRating: number;
-  keyIdeas: number;
-  type: string;
-  status: string;
-  subscriptionRequired: boolean;
-  summary: string;
-  tags: string[];
-  bookDescription: string;
-  authorDescription: string;
 }
 
 export const SearchBar = () => {
   const [search, setSearch] = useState("");
   const [books, setBooks] = useState<Book[]>([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,7 +24,6 @@ export const SearchBar = () => {
     }
 
     const debounce = setTimeout(async () => {
-      setLoading(true);
       setError(null);
       try {
         const res = await axios.get<Book[]>(
@@ -48,7 +34,6 @@ export const SearchBar = () => {
         setError("Failed to fetch books");
         console.error(err);
       } finally {
-        setLoading(false);
       }
     }, 300);
 

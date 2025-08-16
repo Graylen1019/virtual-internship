@@ -6,7 +6,7 @@ import { useBook } from '@/hooks/use-book';
 import { useParams } from 'next/navigation';
 
 export const AudioPlayer = () => {
-  const audioRef = useRef<HTMLAudioElement>(null); // ✅ type-safe
+  const audioRef = useRef<HTMLAudioElement>(null);
   const params = useParams<{ id: string }>();
   const { book, loading, error } = useBook(params.id);
 
@@ -16,10 +16,7 @@ export const AudioPlayer = () => {
 
   return (
     <div className="w-full h-20 mt-auto flex items-center justify-between bg-[#042330] px-10 fixed bottom-0 z-50">
-      {/* Only one audio element */}
       <audio ref={audioRef} src={book.audioLink} />
-
-      {/* Pass book and audioRef down */}
       <TrackInfo book={book} />
       <Controls audioRef={audioRef} book={book} />
       <ProgressBar audioRef={audioRef} book={book} />

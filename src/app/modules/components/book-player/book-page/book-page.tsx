@@ -25,7 +25,6 @@ interface Book {
     type: string;
     status: string;
     subscriptionRequired: boolean;
-    summary: string;
     tags: string[];
     bookDescription: string;
     authorDescription: string;
@@ -47,7 +46,6 @@ export const BookPageContent = () => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [duration, setDuration] = useState(0);
 
-    // Auth listener
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
@@ -55,7 +53,6 @@ export const BookPageContent = () => {
         return () => unsubscribe();
     }, [auth]);
 
-    // Fetch book & user info
     useEffect(() => {
         if (!params.id) return;
 
@@ -94,12 +91,10 @@ export const BookPageContent = () => {
         }
     }, [params.id, currentUser]);
 
-    // Audio duration
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
 
-        // Metadata may already be loaded
         if (!isNaN(audio.duration) && audio.duration > 0) setDuration(audio.duration);
 
         const handleLoadedMetadata = () => setDuration(audio.duration);
@@ -156,7 +151,6 @@ export const BookPageContent = () => {
         }
     };
 
-    // --- Render Loading / Error / Content ---
     if (loading) {
         return (
             <div className="max-w-5xl w-full mx-auto px-6 py-10 flex gap-8">

@@ -16,16 +16,8 @@ interface Book {
     subTitle: string;
     imageLink: string;
     audioLink: string;
-    totalRating: number;
     averageRating: number;
-    keyIdeas: number;
-    type: string;
-    status: string;
     subscriptionRequired: boolean;
-    summary: string;
-    tags: string[];
-    bookDescription: string;
-    authorDescription: string;
 }
 
 const LibraryPageContentSkeleton = () => {
@@ -86,7 +78,6 @@ export const LibraryPageContent = () => {
                 });
                 setBooks(fetchedBooks);
 
-                // Preload audio durations
                 fetchedBooks.forEach((book) => {
                     const audio = new Audio(book.audioLink);
                     audio.addEventListener("loadedmetadata", () => {

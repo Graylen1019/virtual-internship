@@ -10,8 +10,6 @@ import { SignUpForm } from "./modules/components/sign-up/sign-up";
 import { useModal } from "./context/modal-context";
 import Image from "next/image";
 
-//TODO: deal with BOOK props not used in each file.
-
 export default function Home() {
   const { isSignInOpen, openSignInModal, closeSignInModal } = useModal();
 

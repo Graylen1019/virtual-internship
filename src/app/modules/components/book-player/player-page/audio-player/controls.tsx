@@ -4,7 +4,7 @@ import { FaPlayCircle, FaPauseCircle } from 'react-icons/fa';
 
 interface ControlsProps {
   audioRef: React.RefObject<HTMLAudioElement | null>;
-  book: { audioLink: string }; // Only need audioLink
+  book: { audioLink: string };
 }
 
 export const Controls = ({ audioRef }: ControlsProps) => {

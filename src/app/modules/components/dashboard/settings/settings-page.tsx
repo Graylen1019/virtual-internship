@@ -45,7 +45,6 @@ export const SettingsPageContent = () => {
         const fetchUserData = async () => {
             const currentUser = auth.currentUser;
             if (currentUser) {
-                // Set the user's email directly from the currentUser object
                 setUserEmail(currentUser.email);
                 setLoading(true)
 
@@ -57,12 +56,10 @@ export const SettingsPageContent = () => {
                     setUserSubscriptionStatus(userDocSnap.data().subscriptionStatus);
                     setLoading(false)
                 } else {
-                    // Handle the case where the user document doesn't exist
                     setLoading(false)
                     setUserSubscriptionStatus("No subscription data found.");
                 }
             } else {
-                // Handle the case where there is no authenticated user
                 setError(!auth.currentUser)
                 setLoading(false)
                 setUserSubscriptionStatus("User not logged in.");
